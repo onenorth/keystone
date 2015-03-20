@@ -16,16 +16,20 @@ block content
 					h3: a(href=path)= list.label
 		else
 			each navSection in nav.sections
-				.nav-section
-					h4= navSection.label
-					ul: each list in navSection.lists
-						if list.external
-							- path = list.path
-						else
-							- path = '/keystone/' + list.path
-						li: a(href=path)= list.label
+				if navSection.label == 'Lists'
+				else
+					.nav-section
+						.nav-section__wrapper
+							h4= navSection.label
+							ul: each list in navSection.lists
+								if list.external
+									- path = list.path
+								else
+									- path = '/keystone/' + list.path
+								li: a(href=path)= list.label
 			if orphanedLists.length
 				.nav-section
-					h4 Other
-					ul: each list in orphanedLists
-						li: a(href='/keystone/' + list.path)= list.label
+					.nav-section__wrapper
+						h4 Other
+						ul: each list in orphanedLists
+							li: a(href='/keystone/' + list.path)= list.label

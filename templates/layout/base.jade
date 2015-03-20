@@ -35,7 +35,14 @@ html
 					if signout
 						ul.nav.navbar-nav.navbar-right
 							li.divider
-							li: a(href=signout).signout Sign Out
+							li.dropdown
+								a(href='#', role='button', data-toggle='dropdown').dropdown-toggle.user-dropdown
+									span.dropdown-label=User.getDocumentName(user)
+									b.caret
+								ul(role='menu').dropdown-menu
+									li: a(href='/keystone/' + User.path + '/' + user.id) Edit Profile
+									li.divider
+									li: a(href=signout).signout Sign Out
 					ul.nav.navbar-nav
 						each navSection in nav.sections
 							if navSection.lists[0].external
@@ -71,8 +78,7 @@ html
 				block content
 
 		#footer: .container
-			p 	#{brand} #{appversion} 
-				| Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a> version #{version}.
+			p 	#{brand} #{appversion}.
 				if User && user
 					|  Signed in as 
 					a(href='/keystone/' + User.path + '/' + user.id)= User.getDocumentName(user)
