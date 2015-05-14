@@ -27,6 +27,10 @@
 // HTML ELEMENTS
 //---------------------------
 
+html, body {
+  height: 100%;
+}
+
 body {
   background-color: @color-dark-grey;
 }
@@ -71,6 +75,7 @@ body {
 #wrap {
   .clearfix();
 
+  height: 100%;
   background: @color-white;
 }
 
@@ -106,6 +111,7 @@ body {
 
 #sidebar {
   float:left;
+  height: 100%;
   width: 30%;
   min-width: 90px;
   background: @color-dark-grey;
@@ -213,6 +219,7 @@ body {
 //---------------------------
 
 #footer {
+  clear: both;
   margin-top: 0;
 }
 
