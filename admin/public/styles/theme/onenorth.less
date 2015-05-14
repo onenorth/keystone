@@ -1,0 +1,140 @@
+@color-dark-grey: #3D3D3D;
+@color-white: #FFFFFF;
+@color-onenorth-red: #cd1820;
+@color-onenorth-font: #f5d1d2;
+@color-border: rgba(255,255,255,0.1);
+
+body {
+  background-color: @color-dark-grey;
+}
+
+// NAVBAR STYLES
+
+#header {
+  background-color: @color-onenorth-red;
+}
+
+.navbar-brand {
+  background-image: url('/images/One_North_Horizontal.svg');
+  background-size: contain;
+  font-size: 0;
+  height: 50px;
+  width: 140px;
+  background-position: 50%;
+}
+
+.navbar-default {
+  background-color:unset;
+}
+
+//#header .navbar-brand {
+//  color: @color-onenorth-font;
+//}
+
+#header .navbar-backtobrand-message, #header .navbar-backtobrand-trigger {
+  background-color: @color-onenorth-red;
+  color: @color-onenorth-font;
+}
+
+#sidebar {
+  background-color: @navbar-keystone-bg;
+  width: 25%;
+  background: @color-dark-grey;
+  float:left;
+}
+
+#content {
+  margin-top: 0;
+  padding: 0.5em 2em;
+  background: @color-white;
+  width:75%;
+  margin-left:25%;
+}
+
+#wrap:after {
+  clear: both;
+}
+
+.nav-icon-expand {
+  display: none;
+}
+
+.nav-icon-collapse {
+  display: block;
+}
+
+.sidebar-collapse #sidebar {
+  width: 10%;
+}
+
+.sidebar-collapse #content {
+  width: 90%;
+  margin-left: 10%;
+}
+
+.sidebar-collapse .nav-icon-expand {
+  display: block;
+}
+
+.sidebar-collapse .nav-icon-collapse {
+  display: none;
+}
+
+.sidebar-collapse .nav-text {
+  display: none;
+}
+
+.sidebar ul {
+  //width: 90%;
+  list-style-type: none;
+  list-style-position: outside;
+  margin: 0 15px;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid @color-border;
+  float:none;
+
+  &:first-child {
+	border: 0;
+  }
+}
+
+.sidebar a {
+  display: inline-block;
+  padding: 16px 0;
+  color: @color-white;
+  text-decoration: none;
+  text-transform: uppercase;
+  line-height: 2;
+}
+
+#sidebar .nav-icon {
+  float: left;
+  width: 32px;
+  height: 32px;
+  fill: #FAFAFA;
+  margin: 0 10px;
+}
+
+.iconmelon,
+.im {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: block;
+  fill: #525151;
+}
+.iconmelon:after,
+.im:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+

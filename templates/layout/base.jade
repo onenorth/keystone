@@ -19,56 +19,101 @@ html
 		link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
 		block head
 
-	body(id='page-' + page)
+	body(id='page-' + page).sidebar-collapse
+		include ../../admin/public/images/icons/icons.svg
 		#wrap
 			nav(role='navigation')#header.navbar.navbar-default.navbar-static-top: .container
 				a(href=backUrl).navbar-backtobrand-trigger.hidden-xs: span.ion-arrow-left-c
 				.navbar-backtobrand-message Back to the #{brand} website
 				.navbar-header
-					button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-headernav-collapse')
-						span.sr-only Toggle section navigation
-						span.icon-bar
-						span.icon-bar
-						span.icon-bar
 					a(href='/keystone', class=(section == 'home' ? 'active' : null)).navbar-brand= brand
-				.collapse.navbar-collapse.navbar-headernav-collapse
-					if signout
-						ul.nav.navbar-nav.navbar-right
-							li.divider
-							li: a(href=signout).signout Sign Out
-					ul.nav.navbar-nav
-						each navSection in nav.sections
-							if navSection.lists[0].external
-								- path = navSection.lists[0].path
-							else
-								- path = '/keystone/' + navSection.lists[0].path
 
-							li(class=section.key == navSection.key ? 'active' : null): a(href=path)= navSection.label
-			if section.lists && section.lists.length > 1
-				nav(role='navigation')#section-nav.navbar.navbar-default.navbar-static-top: .container
-					.navbar-header
-						button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-sectionnav-collapse')
-							span.sr-only Toggle list navigation
-							span.icon-bar
-							span.icon-bar
-							span.icon-bar
-						.navbar-brand.visible-xs
-							=section.label
-							if section.label != list.label
-								| : #{list.label}
-					.collapse.navbar-collapse.navbar-sectionnav-collapse
-						ul.nav.navbar-nav
-							each navList in section.lists
-								if navList.external
-									- path = navList.path
-								else
-									- path = '/keystone/' + navList.path
-									
-								li(class=navList.key == list.key ? 'active' : null): a(href=path)= navList.label
-			#body: .container
-				block intro
-				+flash-messages(messages)
-				block content
+			#sidebar.sidebar.sidebar-offcanvas
+				//a(href=backUrl).navbar-backtobrand-trigger.hidden-xs: span.ion-arrow-left-c
+				//.navbar-backtobrand-message Back to the #{brand} website
+				//.navbar-header
+				//	button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-headernav-collapse')
+				//		span.sr-only Toggle section navigation
+				//		span.icon-bar
+				//		span.icon-bar
+				//		span.icon-bar
+				//	a(href='/keystone', class=(section == 'home' ? 'active' : null)).navbar-brand= brand
+			
+				ul.sidebar-nav
+					li
+						a(href='#')#sidebar-toggle
+							span.nav-icon.nav-icon-expand
+								svg(viewBox='0 0 32 32')
+									g(filter='')
+										use(xlink:href='#menu')
+							span.nav-icon.nav-icon-collapse
+								svg(viewBox='0 0 32 32')
+									g(filter='')
+										use(xlink:href='#arrow-left')
+					each navSection in nav.sections
+						if navSection.lists[0].external
+							- path = navSection.lists[0].path
+						else
+							- path = '/keystone/' + navSection.lists[0].path
+						if navSection.label == 'People'
+							- svgid = '#users'
+						else if navSection.label == 'Main Content Types'
+							- svgid = '#grid'
+						else if navSection.label == 'Experience'
+							- svgid = '#signal'
+						else if navSection.label == 'Lists'
+							- svgid = '#list'
+						else if navSection.label == 'Users'
+							- svgid = '#user'
+						else
+							- svgid = '#question'
+
+						li(class=section.key == navSection.key ? 'active' : null)
+							a(href=path)
+								span.nav-icon
+									svg(viewBox='0 0 32 32')
+										g(filter='')
+											use(xlink:href=(svgid))
+								span.nav-text
+									= navSection.label
+				if signout
+					ul.sidebar-nav
+						li.divider
+						li 
+							a(href=signout).signout
+								span.nav-icon
+									svg(viewBox='0 0 32 32')
+										g(filter='')
+											use(xlink:href='#gear')
+								span.nav-text
+									= 'Sign Out'
+			#content
+				if section.lists && section.lists.length > 1
+					nav(role='navigation')#section-nav.navbar.navbar-default.navbar-static-top: .container
+						.navbar-header
+							button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-sectionnav-collapse')
+								span.sr-only Toggle list navigation
+								span.icon-bar
+								span.icon-bar
+								span.icon-bar
+							.navbar-brand.visible-xs
+								=section.label
+								if section.label != list.label
+									| : #{list.label}
+						.collapse.navbar-collapse.navbar-sectionnav-collapse
+							ul.nav.navbar-nav
+								each navList in section.lists
+									if navList.external
+										- path = navList.path
+									else
+										- path = '/keystone/' + navList.path
+
+									li(class=navList.key == list.key ? 'active' : null): a(href=path)= navList.label
+				#body: .container
+					block intro
+					+flash-messages(messages)
+					block content
+
 
 		#footer: .container
 			p 	#{brand} #{appversion} 
@@ -131,7 +176,10 @@ html
 		
 		//- Page Scripts
 		block js
-
+		
+		//- One North
+		script(src="/keystone/js/onenorth.js")
+		
 		//- Google Analytics
 		if env == 'production' && ga.property && ga.domain
 			script.
