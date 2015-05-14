@@ -1,0 +1,71 @@
+// VARIABLES
+@body-bg:    			#FAFAFA;
+@nav-section-bg:	#FFF;
+@link-color: 			#cd1820; 
+@h4-size: 				ceil(@font-size-base * 1.25);
+@brand-success:   #0a6588;
+@input-focus-border: @brand-info;
+
+// NAVBAR STYLES
+
+#header {
+	background-color: @navbar-keystone-bg;
+}
+
+.navbar-brand {
+	background-image: url('/images/One_North_Horizontal.svg');
+	background-size: contain;
+  font-size: 0;
+  height: 50px;
+  width: 140px;
+  background-position: 50%;
+}
+
+.user-dropdown {
+	.dropdown-label {
+		margin-right: 4px;
+	}
+}
+
+
+// HEADING STYLES
+h4 {
+	text-transform: uppercase;
+	font-size: @h4-size;
+	color: @link-color;
+	margin-bottom: 10px;
+}
+
+
+
+// NAV SECTIONS (Admin Landing Page)
+.nav-section {
+	padding-right: 1em;
+
+	h4 {
+		border-bottom: 1px solid rgba(0,0,0,0.04);
+		padding-bottom: 10px;
+	}
+
+	a {
+		color: @gray;
+	}
+}
+
+.nav-section__wrapper {
+	border-radius: @border-radius-base;
+	box-shadow: inset 0px 0px 1px;
+	color: rgba(0,0,0,0.15);
+	padding: 1em;
+	background-color: @nav-section-bg;
+
+	&:hover {
+		color: rgba(0,0,0,0.35);
+	}
+}
+
+// FORM CONTROLS
+.form-control {
+
+	.form-control-focus(@input-focus-border);
+}
