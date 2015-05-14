@@ -1,14 +1,80 @@
+//---------------------------
+// COLORS
+//---------------------------
+
 @color-dark-grey: #3D3D3D;
 @color-white: #FFFFFF;
 @color-onenorth-red: #cd1820;
 @color-onenorth-font: #f5d1d2;
 @color-border: rgba(255,255,255,0.1);
 
+//---------------------------
+// MIXINS
+//---------------------------
+
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+//---------------------------
+// HTML ELEMENTS
+//---------------------------
+
 body {
   background-color: @color-dark-grey;
 }
 
-// NAVBAR STYLES
+//---------------------------
+// ICONS (SVG)
+//---------------------------
+
+.iconmelon,
+.im {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: block;
+  fill: #525151;
+}
+
+.iconmelon:after,
+.im:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+//---------------------------
+// CONTAINER
+//---------------------------
+
+.container {
+  @media screen and (min-width: 768px) {
+    max-width: 100%;
+  }
+}
+
+//---------------------------
+// PAGE WRAPPER (#wrap)
+//---------------------------
+
+#wrap {
+  .clearfix();
+}
+
+//---------------------------
+// HEADER (e.g., logo area)
+//---------------------------
 
 #header {
   background-color: @color-onenorth-red;
@@ -27,90 +93,70 @@ body {
   background-color:unset;
 }
 
-//#header .navbar-brand {
-//  color: @color-onenorth-font;
-//}
-
 #header .navbar-backtobrand-message, #header .navbar-backtobrand-trigger {
   background-color: @color-onenorth-red;
   color: @color-onenorth-font;
 }
 
+//---------------------------
+// SIDEBAR NAV
+//---------------------------
+
 #sidebar {
-  background-color: @navbar-keystone-bg;
-  width: 25%;
-  background: @color-dark-grey;
   float:left;
-}
+  width: 30%;
+  min-width: 90px;
+  background: @color-dark-grey;
 
-#content {
-  margin-top: 0;
-  padding: 0.5em 2em;
-  background: @color-white;
-  width:75%;
-  margin-left:25%;
-}
+  @media screen and (min-width: 768px) {
+    width: 25%;
+  }
 
-#wrap:after {
-  clear: both;
-}
-
-.nav-icon-expand {
-  display: none;
-}
-
-.nav-icon-collapse {
-  display: block;
-}
-
-.sidebar-collapse #sidebar {
-  width: 10%;
-}
-
-.sidebar-collapse #content {
-  width: 90%;
-  margin-left: 10%;
-}
-
-.sidebar-collapse .nav-icon-expand {
-  display: block;
-}
-
-.sidebar-collapse .nav-icon-collapse {
-  display: none;
-}
-
-.sidebar-collapse .nav-text {
-  display: none;
-}
-
-.sidebar ul {
-  //width: 90%;
-  list-style-type: none;
-  list-style-position: outside;
-  margin: 0 15px;
-  padding: 0;
-}
-
-.sidebar li {
-  margin: 0;
-  padding: 0;
-  border-bottom: 1px solid @color-border;
-  float:none;
-
-  &:first-child {
-	border: 0;
+  @media screen and (min-width: 1200px) {
+    width: 20%;
   }
 }
 
-.sidebar a {
-  display: inline-block;
-  padding: 16px 0;
-  color: @color-white;
-  text-decoration: none;
-  text-transform: uppercase;
-  line-height: 2;
-}
+  .sidebar-collapse #sidebar {
+    width: 10%;
+    max-width: 90px;
+  }
+
+  .sidebar-collapse .nav-text {
+    display: none;
+  }
+
+  .sidebar ul {
+    //width: 90%;
+    list-style-type: none;
+    list-style-position: outside;
+    margin: 0 15px;
+    padding: 0;
+  }
+
+  .sidebar li {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid @color-border;
+    float:none;
+
+    &:first-child {
+    border: 0;
+    }
+  }
+
+  .sidebar a {
+    display: inline-block;
+    padding: 16px 0;
+    color: @color-white;
+    text-decoration: none;
+    text-transform: uppercase;
+    line-height: 2;
+  }
+
+//---------------------------
+// NAV ICONS
+//---------------------------
 
 #sidebar .nav-icon {
   float: left;
@@ -120,21 +166,51 @@ body {
   margin: 0 10px;
 }
 
-.iconmelon,
-.im {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  display: block;
-  fill: #525151;
+.nav-icon-expand {
+  display: none;
 }
-.iconmelon:after,
-.im:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+
+  .sidebar-collapse .nav-icon-expand {
+    display: block;
+  }
+
+.nav-icon-collapse {
+  display: block;
+}
+
+  .sidebar-collapse .nav-icon-collapse {
+    display: none;
+  }
+
+//---------------------------
+// CONTENT
+//---------------------------
+
+#content {
+  float: left;
+  margin-top: 0;
+  padding: 0.5em 2em;
+  background: @color-white;
+  width:70%;
+
+  @media screen and (min-width: 768px) {
+    width: 75%;
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: 80%;
+  }
+}
+
+  .sidebar-collapse #content {
+    width:  ~"calc(100% - 90px)";
+  }
+
+//---------------------------
+// FOOTER
+//---------------------------
+
+#footer {
+  margin-top: 0;
 }
 
