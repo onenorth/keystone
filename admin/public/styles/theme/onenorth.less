@@ -7,6 +7,7 @@
 @color-onenorth-red: #cd1820;
 @color-onenorth-font: #f5d1d2;
 @color-border: rgba(255,255,255,0.1);
+@nav-section-bg:#FFF;
 
 //---------------------------
 // MIXINS
@@ -224,3 +225,36 @@ body {
   margin-top: 0;
 }
 
+//---------------------------
+// NAV SECTIONS (Admin Landing Page)
+//---------------------------
+
+.nav-section {
+  padding-right: 1em;
+
+  h4 {
+	border-bottom: 1px solid rgba(0,0,0,0.04);
+	padding-bottom: 10px;
+  }
+
+  a {
+	color: @gray;
+  }
+}
+
+.nav-section__wrapper {
+  border-radius: @border-radius-base;
+  box-shadow: inset 0px 0px 1px;
+  color: rgba(0,0,0,0.15);
+  padding: 1em;
+  background-color: @nav-section-bg;
+
+  &:hover {
+	color: rgba(0,0,0,0.35);
+  }
+}
+
+// LISTS
+.keystone-lists__wrapper {
+  display: flex; // columns on admin landing page
+}

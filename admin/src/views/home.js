@@ -17,19 +17,24 @@ var View = React.createClass({
 
 	renderGroupedNav: function() {
 		return (
-			<div>
+			<div className="keystone-lists__wrapper">
 				{Keystone.nav.sections.map((navSection) => {
+					if (navSection.label == 'Lists') {
+						return '';
+					}
 					return (
 						<div className="nav-section" key={navSection.key}>
-							<h4>{navSection.label}</h4>
-							<ul>
-								{navSection.lists.map((list) => {
-									var href = list.external ? list.path : '/keystone/' + list.path;
-									return (
-										<li key={list.path}><a href={href}>{list.label}</a></li>
-									);
-								})}
-							</ul>
+							<div className="nav-section__wrapper">
+								<h4>{navSection.label}</h4>
+								<ul>
+									{navSection.lists.map((list) => {
+										var href = list.external ? list.path : '/keystone/' + list.path;
+										return (
+											<li key={list.path}><a href={href}>{list.label}</a></li>
+										);
+									})}
+								</ul>
+							</div>
 						</div>
 					);
 				})}
@@ -37,16 +42,18 @@ var View = React.createClass({
 					if (!Keystone.orphanedLists.length) return;
 					return (
 						<div className="nav-section">
-							<h4>Other</h4>
-							<ul>
-								{Keystone.orphanedLists.map((list) => {
-									return (
-										<li key={list.path}>
-											<a href={'/keystone/' + list.path}>{list.label}</a>
-										</li>
-									);
-								})}
-							</ul>
+							<div className="nav-section__wrapper">
+								<h4>Other</h4>
+								<ul>
+									{Keystone.orphanedLists.map((list) => {
+										return (
+											<li key={list.path}>
+												<a href={'/keystone/' + list.path}>{list.label}</a>
+											</li>
+										);
+									})}
+								</ul>
+							</div>
 						</div>
 					);
 				}()}
