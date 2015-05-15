@@ -4,8 +4,8 @@ block content
 	h1.sr-only Sign In
 	.auth-box
 		.auth-box-col
-			include ../includes/auth-brand
-			
+			p.lead: a(href='/').auth-box-logo: img(src='/keystone/images/One_North_Horizontal_Transparent_Color.png', width=205, alt=brand)
+			p.lead Welcome, sign in to your account
 		.auth-box-col
 			if user
 				p.lead Hi #{user.name.first},
@@ -19,13 +19,11 @@ block content
 				form(method="post", novalidate).auth-form
 					input(type='hidden', name=csrf_token_key, value=csrf_token_value)
 					.form-group
-						label(for='email') Email
-						input(type='email', name='email', id='email', value=submitted.email).form-control
+						input(type='email', name='email', id='email', value=submitted.email, placeholder='Email').form-control
 					.form-group
-						label(for='password') Password
-						input(type='password', name='password', id='password').form-control
+						input(type='password', name='password', id='password', placeholder='Password').form-control
 					
-					button(type='submit').btn.btn-primary Sign In
+					button(type='submit').btn.btn-primary.form-control Sign In
 				
 				//- TODO generic forgotten password functionality
 				//- button(type='button').btn.btn-link Forgot Password?

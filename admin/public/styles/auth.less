@@ -16,7 +16,8 @@
 @brand-primary:         #348dd9;
 @body-bg:               #fafafa;
 @gutter-width:          30px;
-
+@color-onenorth-red: #cd1820;
+@color-onenorth-font: #f5d1d2;
 
 
 // Imports
@@ -38,7 +39,8 @@ h1,h2,h3 {
 }
 
 .lead {
-	font-size: 120%;
+	font-size: 100%;
+  	text-align: center;
 }
 
 
@@ -54,12 +56,12 @@ body {
 }
 .auth-wrapper {
 	margin: 0 auto;
-	max-width: 600px;
+	max-width: 300px;
 	padding-top: 20px;
 	width: 90%;
 	
 	@media (min-width: @screen-sm) {
-		margin: -160px 0 0 -300px;
+		margin: -200px 0 0 -150px;
 		position: absolute;
 		left: 50%;
 		top: 40%;
@@ -119,9 +121,15 @@ body {
 // Buttons
 // ------------------------------
 
-.btn-primary {
-	#gradient .vertical(lighten(@link-color, 4%), darken(@link-color, 4%));
-	// border: 0 none;
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active
+{
+	//#gradient .vertical(lighten(@link-color, 4%), darken(@link-color, 4%));
+  	background-color:@color-onenorth-red;
+	border: 0 none;
+  	color: @color-onenorth-font;
 }
 
 
@@ -134,7 +142,7 @@ body {
 	.make-row(@gutter-width);
 }
 .auth-box-col {
-	.make-sm-column(6,@gutter-width);
+	.make-sm-column(12,@gutter-width);
 }
 .auth-box-brand {
 	font-weight: 500;
