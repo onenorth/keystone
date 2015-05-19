@@ -58,7 +58,7 @@ html
 						else
 							- svgid = '#question'
 
-						li(class=section.key == navSection.key ? 'active' : null)
+						li(class=section.key == navSection.key ? 'active' : null).section
 							a(href=path,title=navSection.label)
 								span.nav-icon
 									svg(viewBox='0 0 32 32')
@@ -66,6 +66,17 @@ html
 											use(xlink:href=(svgid))
 								span.nav-text
 									= navSection.label
+							span.nav-toggle
+								svg(viewBox='0 0 32 32')
+									g(filter='')
+										use(xlink:href='#arrows',transform="rotate(90 16 16)")
+						li.lists
+							ul
+								each navList in navSection.lists
+									li(class=list.key == navList.key ? 'active' : null).list
+										a(href=navList.path)
+											span.nav-text
+												= navList.label
 				
 				.footer
 					p

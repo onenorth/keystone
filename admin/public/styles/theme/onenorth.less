@@ -110,7 +110,9 @@ body {
 
   .nav-text {
 	color: @color-navtext;
+	font-size: 13px;
   }
+	a:hover .nav-text,
 	.active .nav-text {
 	  color: @color-navtext-active;
 	}
@@ -118,6 +120,7 @@ body {
   .nav-icon svg {
 	fill: @color-navicon;
   }
+	a:hover .nav-icon svg,
 	.active .nav-icon svg {
 	  fill: @color-navicon-active;
 	}
@@ -137,10 +140,10 @@ body {
     padding: 0;
   }
 
-  .sidebar li {
+  li.section {
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid @color-border;
+    border-top: 1px solid @color-border;
     float:none;
 
     &:first-child {
@@ -160,6 +163,24 @@ body {
     line-height: 25px;
   }
 
+  .lists ul {
+	margin: 0 0 0 40px;
+	padding: 0;
+  }
+  
+  li.lists  {
+	border: 0;
+  }
+
+	.sidebar-collapse li.lists {
+	  display:none;
+	}
+  
+  .lists a {
+	padding: 0;
+	text-transform: none;
+  }
+  
   .footer {
 	padding: 100px 0 0 0;
   }
@@ -200,6 +221,17 @@ body {
 
   .sidebar-collapse .nav-icon-collapse {
     display: none;
+  }
+
+#sidebar .nav-toggle {
+  float: right;
+  width: 20px;
+  height: 20px;
+  fill: #FAFAFA;
+  margin: 10px 0;
+}
+  .sidebar-collapse #sidebar .nav-toggle {
+	display: none;
   }
 
 //---------------------------
