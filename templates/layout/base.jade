@@ -29,16 +29,6 @@ html
 					a(href='/keystone', class=(section == 'home' ? 'active' : null)).navbar-brand= brand
 
 			#sidebar.sidebar.sidebar-offcanvas
-				//a(href=backUrl).navbar-backtobrand-trigger.hidden-xs: span.ion-arrow-left-c
-				//.navbar-backtobrand-message Back to the #{brand} website
-				//.navbar-header
-				//	button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-headernav-collapse')
-				//		span.sr-only Toggle section navigation
-				//		span.icon-bar
-				//		span.icon-bar
-				//		span.icon-bar
-				//	a(href='/keystone', class=(section == 'home' ? 'active' : null)).navbar-brand= brand
-			
 				ul.sidebar-nav
 					li
 						a(href='#')#sidebar-toggle
@@ -69,24 +59,31 @@ html
 							- svgid = '#question'
 
 						li(class=section.key == navSection.key ? 'active' : null)
-							a(href=path)
+							a(href=path,title=navSection.label)
 								span.nav-icon
 									svg(viewBox='0 0 32 32')
 										g(filter='')
 											use(xlink:href=(svgid))
 								span.nav-text
 									= navSection.label
-				if signout
-					ul.sidebar-nav
-						li.divider
-						li 
-							a(href=signout).signout
+				
+				.footer
+					p
+						if signout
+							a(href=signout,title='Sign Out').signout
 								span.nav-icon
 									svg(viewBox='0 0 32 32')
 										g(filter='')
-											use(xlink:href='#gear')
-								span.nav-text
-									= 'Sign Out'
+											use(xlink:href='#upload',transform="rotate(90 16 16)")
+					p.nav-text
+						if User && user
+							|  Signed in as 
+							a(href='/keystone/' + User.path + '/' + user.id)= User.getDocumentName(user)
+							| .
+					p.nav-text 	#{brand}
+					
+					
+					
 			#content
 				if section.lists && section.lists.length > 1
 					nav(role='navigation')#section-nav.navbar.navbar-default.navbar-static-top: .container
@@ -113,16 +110,7 @@ html
 					block intro
 					+flash-messages(messages)
 					block content
-
-
-		#footer: .container
-			p 	#{brand} #{appversion} 
-				| Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a> version #{version}.
-				if User && user
-					|  Signed in as 
-					a(href='/keystone/' + User.path + '/' + user.id)= User.getDocumentName(user)
-					| .
-
+						
 		//- Common
 		script(src="/keystone/js/lib/underscore/underscore-1.5.1.min.js")
 		script(src="/keystone/js/lib/jquery/jquery-1.10.2.min.js")
