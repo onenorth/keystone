@@ -6,8 +6,12 @@
 @color-white: #FFFFFF;
 @color-onenorth-red: #cd1820;
 @color-onenorth-font: #f5d1d2;
-@color-border: rgba(255,255,255,0.1);
+@color-border: #464646;
 @nav-section-bg:#FFF;
+@color-navtext: #A1A1A1;
+@color-navtext-active: #EBEBEB;
+@color-navicon: #A1A1A1;
+@color-navicon-active: #EBEBEB;
 
 //---------------------------
 // MIXINS
@@ -34,29 +38,6 @@ html, body {
 
 body {
   background-color: @color-dark-grey;
-}
-
-//---------------------------
-// ICONS (SVG)
-//---------------------------
-
-.iconmelon,
-.im {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  display: block;
-  fill: #525151;
-}
-
-.iconmelon:after,
-.im:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
 }
 
 //---------------------------
@@ -113,22 +94,34 @@ body {
 #sidebar {
   float:left;
   height: 100%;
-  width: 30%;
-  min-width: 90px;
+  width: 250px;
   background: @color-dark-grey;
 
-  @media screen and (min-width: 768px) {
-    width: 25%;
-  }
+  //@media screen and (min-width: 768px) {
+  //  width: 25%;
+  //}
 
-  @media screen and (min-width: 1200px) {
-    width: 20%;
-  }
+  //@media screen and (min-width: 1200px) {
+   // width: 20%;
+  //}
 }
 
+  .nav-text {
+	color: @color-navtext;
+  }
+	.active .nav-text {
+	  color: @color-navtext-active;
+	}
+
+  .nav-icon svg {
+	fill: @color-navicon;
+  }
+	.active .nav-icon svg {
+	  fill: @color-navicon-active;
+	}
+
   .sidebar-collapse #sidebar {
-    width: 10%;
-    max-width: 90px;
+    width: 70px;
   }
 
   .sidebar-collapse .nav-text {
@@ -136,7 +129,6 @@ body {
   }
 
   .sidebar ul {
-    //width: 90%;
     list-style-type: none;
     list-style-position: outside;
     margin: 0 15px;
@@ -150,17 +142,23 @@ body {
     float:none;
 
     &:first-child {
-    border: 0;
+    	border: 0;
     }
+	
+	&.active {
+		background-color: @color-border;
+  	}
   }
+  
+
 
   .sidebar a {
     display: inline-block;
-    padding: 16px 0;
+    padding: 10px 0;
     color: @color-white;
     text-decoration: none;
     text-transform: uppercase;
-    line-height: 2;
+    line-height: 25px;
   }
 
 //---------------------------
@@ -169,8 +167,8 @@ body {
 
 #sidebar .nav-icon {
   float: left;
-  width: 32px;
-  height: 32px;
+  width: 20px;
+  height: 20px;
   fill: #FAFAFA;
   margin: 0 10px;
 }
@@ -197,23 +195,23 @@ body {
 
 #content {
   float: left;
-  width:70%;
+  width: ~"calc(100% - 250px)";
   margin-top: 0;
   padding: 0.5em 2em;
   background: @color-white;
 
 
-  @media screen and (min-width: 768px) {
-    width: 75%;
-  }
+  //@media screen and (min-width: 768px) {
+  //  width: 75%;
+  //}
 
-  @media screen and (min-width: 1200px) {
-    width: 80%;
-  }
+  //@media screen and (min-width: 1200px) {
+  //  width: 80%;
+  //}
 }
 
   .sidebar-collapse #content {
-    width:  ~"calc(100% - 90px)";
+    width:  ~"calc(100% - 70px)";
   }
 
 //---------------------------
