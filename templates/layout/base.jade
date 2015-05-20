@@ -77,7 +77,7 @@ html
 						
 							ul.lists
 								each navList in navSection.lists
-									li(class=list.key == navList.key ? 'active' : null).list
+									li(class=(list && list.key == navList.key) ? 'active' : null).list
 										a(href=navList.path)
 											span.nav-text
 												= navList.label
