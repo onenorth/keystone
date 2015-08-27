@@ -5,7 +5,7 @@ var _ = require('underscore'),
 	Note = require('../../components/Note'),
 	Select = require('react-select');
 
-//var SUPPORTED_TYPES = ['image/gif', 'image/png', 'image/jpeg', 'image/bmp', 'image/x-icon', 'application/pdf', 'image/x-tiff', 'image/x-tiff', 'application/postscript', 'image/vnd.adobe.photoshop', 'image/svg+xml'];
+var IMAGE_TYPES = ['image/gif', 'image/png', 'image/jpeg', 'image/bmp', 'image/x-icon', 'application/pdf', 'image/x-tiff', 'image/x-tiff', 'application/postscript', 'image/vnd.adobe.photoshop', 'image/svg+xml'];
 
 module.exports = Field.create({
 
@@ -57,17 +57,21 @@ module.exports = Field.create({
 		if (window.FileReader) {
 			var files = event.target.files;
 			_.each(files, function (f) {
-				//if (!_.contains(SUPPORTED_TYPES, f.type)) {
-				//	self.removeFile();
-				//	alert('Unsupported file type. Supported formats are: GIF, PNG, JPG, BMP, ICO, PDF, TIFF, EPS, PSD, SVG');
-				//	return false;
-				//}
-
+				var isImage = (_.contains(IMAGE_TYPES, f.type));
+				if (self.props.resourceType === 'image' && !isImage) {
+					self.removeFile();
+					alert('Unsupported file type. Supported formats are: GIF, PNG, JPG, BMP, ICO, PDF, TIFF, EPS, PSD, SVG');
+					return false;
+				}
+				
+				var filename = f.name;
 				var fileReader = new FileReader();
 				fileReader.onload = function (e) {
 					if (!self.isMounted()) return;
 					self.setState({
+						isImage: isImage,
 						localSource: e.target.result,
+						filename: filename,
 						origin: 'local'
 					});
 				};
@@ -95,13 +99,13 @@ module.exports = Field.create({
 			state.removeExisting = true;
 
 			if (this.props.autoCleanup) {
-				if (e.altKey) {
+				if (e && e.altKey) {
 					state.action = 'reset';
 				} else {
 					state.action = 'delete';
 				}
 			} else {
-				if (e.altKey) {
+				if (e && e.altKey) {
 					state.action = 'delete';
 				} else {
 					state.action = 'reset';
@@ -131,6 +135,19 @@ module.exports = Field.create({
 	 */
 	hasExisting: function() {
 		return !!this.props.value.url;
+	},
+
+	/**
+	 * Is this an image file?
+	 */
+	isImage: function() {
+		var hasLocal = this.hasLocal();
+		if (this.hasLocal()) {
+			return this.state.isImage;
+		} else if (this.hasExisting()) {
+			return this.props.value.resource_type === 'image';
+		}
+		return false;
 	},
 
 	/**
@@ -172,11 +189,16 @@ module.exports = Field.create({
 	 */
 	renderFileDetails: function (add) {
 		var values = null;
-
+		
 		if (!this.hasLocal() && !this.state.removeExisting) {
+			var filename = this.props.value.public_id.substring(this.props.value.public_id.lastIndexOf('/') + 1);
+			if (this.props.value.resource_type === 'image') {
+				filename += '.' + this.props.value.format;
+			}
+				
 			values = (
 				<div className='image-values'>
-					<div className='field-value'>{this.props.value.url}</div>
+					<a href={this.props.value.url} className='field-value'>{filename}</a>
 					{this.renderFileDimensions()}
 				</div>
 			);
@@ -191,7 +213,11 @@ module.exports = Field.create({
 	},
 
 	renderFileDimensions: function() {
-		return <div className='field-value'>{this.props.value.width} x {this.props.value.height}</div>;
+		if (this.isImage()) {
+			return <div className='field-value'>{this.props.value.width} x {this.props.value.height}</div>;
+		} else {
+			return <div></div>;
+		}
 	},
 
 	/**
@@ -203,9 +229,10 @@ module.exports = Field.create({
 	 */
 	renderAlert: function() {
 		if (this.hasLocal()) {
+			var filename = this.state.filename;
 			return (
 				<div className='upload-queued pull-left'>
-					<div className='alert alert-success'>File selected - save to upload</div>
+					<div className='alert alert-success'>"{filename}" selected - save to upload</div>
 				</div>
 			);
 		} else if (this.state.origin === 'cloudinary') {
@@ -266,7 +293,7 @@ module.exports = Field.create({
 			<div key={this.props.path + '_toolbar'} className='image-toolbar'>
 				<div className='pull-left'>
 					<button type='button' onClick={this.changeFile} className='btn btn-default btn-upload-image'>
-						{this.hasFile() ? 'Change' : 'Upload'} File
+						{this.hasFile() ? 'Change' : 'Upload'} {(this.props.resourceType === 'image') ? 'Image' : 'File'}
 					</button>
 					{this.hasFile() && this.renderClearButton()}
 				</div>
@@ -318,6 +345,7 @@ module.exports = Field.create({
         var container = [],
 			body = [],
 			hasFile = this.hasFile(),
+			isImage = this.isImage(),
 			fieldClassName = 'field-ui';
 
 		if (hasFile) {
@@ -326,14 +354,18 @@ module.exports = Field.create({
 
 		if (this.shouldRenderField()) {
 			if (hasFile) {
-				container.push(this.renderFilePreview());
+				if (isImage) {
+					container.push(this.renderFilePreview());
+				}
 				container.push(this.renderFileDetails(this.renderAlert()));
 			}
 
 			body.push(this.renderFileToolbar());
 		} else {
 			if (hasFile) {
-				container.push(this.renderFilePreview());
+				if (isImage) {
+					container.push(this.renderFilePreview());
+				}
 				container.push(this.renderFileDetails());
 			} else {
 				container.push(<div className='help-block'>no file</div>);

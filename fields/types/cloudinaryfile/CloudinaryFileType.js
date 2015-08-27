@@ -20,7 +20,7 @@ function cloudinaryfile(list, path, options) {
 
 	this._underscoreMethods = ['format'];
 	this._fixedSize = 'full';
-	this._properties = ['select', 'selectPrefix', 'autoCleanup', 'publicID', 'folder', 'filenameAsPublicID'];
+	this._properties = ['select', 'selectPrefix', 'autoCleanup', 'folder', 'resourceType'];
 
 	// TODO: implement filtering, usage disabled for now
 	options.nofilter = true;
@@ -150,9 +150,15 @@ cloudinaryfile.prototype.addToSchema = function() {
 		}
 
 		options.version = item.get(paths.version);
-
-		return cloudinary.url(item.get(paths.public_id) + '.' + item.get(paths.format), options);
-
+		var resource_type = item.get(paths.resource_type);
+		
+		if (resource_type === 'image') {
+			return cloudinary.url(item.get(paths.public_id) + '.' + item.get(paths.format), options);
+		} else if (resource_type === 'raw') {
+			options.resource_type = 'raw';
+			return cloudinary.url(item.get(paths.public_id), options);
+		}
+		return '';
 	};
 
 	var reset = function(item) {
@@ -312,7 +318,6 @@ cloudinaryfile.prototype.validateInput = function(data) {//eslint-disable-line n
 
 cloudinaryfile.prototype.updateItem = function(item, data) {
 	var paths = this.paths;
-
 	var setValue = function(key) {
 		if (paths[key]) {
 			var index = paths[key].indexOf('.');
@@ -374,19 +379,21 @@ cloudinaryfile.prototype.getRequestHandler = function(item, req, paths, callback
 			});
 
 		} else if (req.files && req.files[paths.upload] && req.files[paths.upload].size) {
-
+			
 			var tp = keystone.get('cloudinary prefix') || '';
 			var fileDelete;
 
 			if (tp.length) {
 				tp += '_';
 			}
-
+			
+			var resourceType = (field.options.resourceType) ? field.options.resourceType : 'auto';
+			
 			var uploadOptions = {
-				tags: [tp + field.list.path + '_' + field.path, tp + field.list.path + '_' + field.path + '_' + item.id],
-				resource_type: "raw"
+				tags: [tp + field.list.path + '_' + field.path, tp + field.list.path + '_' + field.path + '_' + item.id, tp + item.id],
+				resource_type: resourceType
 			};
-
+			
 			if (keystone.get('cloudinary folders')) {
 				uploadOptions.folder = item.get(paths.folder);
 			}
@@ -399,15 +406,8 @@ cloudinaryfile.prototype.getRequestHandler = function(item, req, paths, callback
 				uploadOptions.tags.push(tp + 'dev');
 			}
 
-			if (field.options.publicID) {
-				var publicIdValue = item.get(field.options.publicID);
-				if (publicIdValue) {
-					uploadOptions.public_id = publicIdValue;
-				}
-			} else if (field.options.filenameAsPublicID) {
-				uploadOptions.public_id = req.files[paths.upload].originalname.substring(0, req.files[paths.upload].originalname.lastIndexOf('.'));
-			}
-
+			uploadOptions.public_id = field.list.path + '/' + item.id + '/' + field.path + '/' + req.files[paths.upload].originalname.substring(0, req.files[paths.upload].originalname.lastIndexOf('.'));
+			
 			if (field.options.autoCleanup && item.get(field.paths.exists)) {
 				// capture file delete promise
 				fileDelete = field.apply(item, 'delete');
@@ -425,7 +425,6 @@ cloudinaryfile.prototype.getRequestHandler = function(item, req, paths, callback
 			
 			// upload immediately if file is not being delete
 			if (typeof fileDelete === 'undefined') {
-				console.log('here')
 				field.apply(item, 'upload', req.files[paths.upload].path, uploadOptions).onFulfill(uploadComplete);
 			} else {
 				// otherwise wait until file is deleted before uploading
