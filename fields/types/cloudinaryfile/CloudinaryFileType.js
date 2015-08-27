@@ -20,7 +20,13 @@ function cloudinaryfile(list, path, options) {
 
 	this._underscoreMethods = ['format'];
 	this._fixedSize = 'full';
-	this._properties = ['select', 'selectPrefix', 'autoCleanup', 'folder', 'resourceType'];
+	this._properties = ['select', 'selectPrefix', 'autoCleanup', 'folder', 'resourceType', 'rootUrl'];
+
+	if (!('rootUrl' in options)) {
+		var cloudinaryUrl = process.env.CLOUDINARY_URL
+		var cloudName = cloudinaryUrl.substring(cloudinaryUrl.lastIndexOf('@') + 1);
+		options.rootUrl = '//res.cloudinary.com/' + cloudName + '/';
+	}
 
 	// TODO: implement filtering, usage disabled for now
 	options.nofilter = true;
@@ -71,10 +77,8 @@ cloudinaryfile.prototype.addToSchema = function() {
 		signature: 		this._path.append('.signature'),
 		format: 		this._path.append('.format'),
 		resource_type: 	this._path.append('.resource_type'),
-		url: 			this._path.append('.url'),
 		width: 			this._path.append('.width'),
 		height: 		this._path.append('.height'),
-		secure_url: 	this._path.append('.secure_url'),
 		// virtuals
 		exists: 		this._path.append('.exists'),
 		folder: 		this._path.append('.folder'),
@@ -90,10 +94,8 @@ cloudinaryfile.prototype.addToSchema = function() {
 		signature:		String,
 		format:			String,
 		resource_type:	String,
-		url:			String,
 		width:			Number,
-		height:			Number,
-		secure_url:		String
+		height:			Number
 	});
 
 	schema.add(schemaPaths);
@@ -135,6 +137,8 @@ cloudinaryfile.prototype.addToSchema = function() {
 			return '';
 		}
 
+		var resource_type = item.get(paths.resource_type);
+		
 		options = ('object' === typeof options) ? options : {};
 
 		if (!('fetch_format' in options) && keystone.get('cloudinary webp') !== false) {
@@ -149,8 +153,11 @@ cloudinaryfile.prototype.addToSchema = function() {
 			options.secure = true;
 		}
 
+		if (resource_type === 'image' && !('use_root_path' in options)) {
+			options.use_root_path = true;
+		}
+
 		options.version = item.get(paths.version);
-		var resource_type = item.get(paths.resource_type);
 		
 		if (resource_type === 'image') {
 			return cloudinary.url(item.get(paths.public_id) + '.' + item.get(paths.format), options);
@@ -168,10 +175,8 @@ cloudinaryfile.prototype.addToSchema = function() {
 			signature: '',
 			format: '',
 			resource_type: '',
-			url: '',
 			width: 0,
-			height: 0,
-			secure_url: ''
+			height: 0
 		});
 	};
 
@@ -283,7 +288,7 @@ cloudinaryfile.prototype.addToSchema = function() {
  */
 
 cloudinaryfile.prototype.format = function(item) {
-	return item.get(this.paths.url);
+	return item.get(this.paths.public_id);
 };
 
 
@@ -294,7 +299,7 @@ cloudinaryfile.prototype.format = function(item) {
  */
 
 cloudinaryfile.prototype.isModified = function(item) {
-	return item.isModified(this.paths.url);
+	return item.isModified(this.paths.version);
 };
 
 
@@ -330,7 +335,7 @@ cloudinaryfile.prototype.updateItem = function(item, data) {
 		}
 	};
 
-	_.each(['public_id', 'version', 'signature', 'format', 'resource_type', 'url', 'width', 'height', 'secure_url'], setValue);
+	_.each(['public_id', 'version', 'signature', 'format', 'resource_type', 'width', 'height'], setValue);
 };
 
 

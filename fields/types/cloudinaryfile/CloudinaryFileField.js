@@ -23,7 +23,7 @@ module.exports = Field.create({
 		if (this.hasLocal()) {
 			return this.state.localSource;
 		} else if (this.hasExisting()) {
-			return this.props.value.url;
+			return this.getFileURL();
 		} else {
 			return null;
 		}
@@ -31,7 +31,11 @@ module.exports = Field.create({
 
 	getFileURL: function() {
 		if (!this.hasLocal() && this.hasExisting()) {
-			return this.props.value.url;
+			if (this.props.value.resource_type === 'image') {
+				return this.props.rootUrl + 'image/upload/v' + this.props.value.version + '/' + this.props.value.public_id;
+			} else {
+				return this.props.rootUrl + 'raw/upload/v' + this.props.value.version + '/' + this.props.value.public_id;
+			}
 		}
 	},
 
@@ -134,7 +138,7 @@ module.exports = Field.create({
 	 * Do we have an existing file?
 	 */
 	hasExisting: function() {
-		return !!this.props.value.url;
+		return !!this.props.value.public_id;
 	},
 
 	/**
@@ -198,7 +202,7 @@ module.exports = Field.create({
 				
 			values = (
 				<div className='image-values'>
-					<a href={this.props.value.url} className='field-value'>{filename}</a>
+					<a href={this.getFileURL()} className='field-value'>{filename}</a>
 					{this.renderFileDimensions()}
 				</div>
 			);
