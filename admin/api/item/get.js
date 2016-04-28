@@ -19,6 +19,10 @@ module.exports = function(req, res) {
 		query.populate(req.list.tracking.updatedBy);
 	}
 
+	// Fix to address updating issue in IE: https://github.com/keystonejs/keystone/issues/1511
+	res.header('Expires', '-1');
+	res.header('Cache-Control', 'no-cache, no-store, private');
+
 	query.exec(function(err, item) {
 
 		if (err) return res.status(500).json({ err: 'database error', detail: err });
