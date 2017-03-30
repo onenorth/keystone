@@ -164,6 +164,9 @@ cloudinaryfile.prototype.addToSchema = function() {
 		} else if (resource_type === 'raw') {
 			options.resource_type = 'raw';
 			return cloudinary.url(item.get(paths.public_id), options);
+		} else if (resource_type === 'video') {
+			options.resource_type = 'video';
+			return cloudinary.url(item.get(paths.public_id), options);
 		}
 		return '';
 	};
@@ -228,6 +231,20 @@ cloudinaryfile.prototype.addToSchema = function() {
 		},
 		thumbnail: function(width, height, options) {
 			return src(this, addSize({ crop: 'thumb', gravity: 'faces' }, width, height, options));
+		},
+		videoSrc: function(options) {
+			var videoOptions = { format: this.get(paths.format) };
+
+			if (options) _.extend(videoOptions, options);
+
+			return src(this, videoOptions);
+		},
+		videoThumb: function(options) {
+			var thumbOptions = { start_offset: '0', format: 'jpg' };
+
+			if (options) _.extend(thumbOptions, options);
+
+			return src(this, thumbOptions);
 		},
 		/**
 		 * Resets the value of the field

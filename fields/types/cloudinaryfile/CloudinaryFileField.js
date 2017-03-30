@@ -33,6 +33,8 @@ module.exports = Field.create({
 		if (!this.hasLocal() && this.hasExisting()) {
 			if (this.props.value.resource_type === 'image') {
 				return this.props.rootUrl + 'image/upload/v' + this.props.value.version + '/' + this.props.value.public_id;
+			} else if (this.props.value.resource_type === 'video'){
+				return this.props.rootUrl + 'video/upload/v' + this.props.value.version + '/' + this.props.value.public_id + '.' + this.props.value.format;
 			} else {
 				return this.props.rootUrl + 'raw/upload/v' + this.props.value.version + '/' + this.props.value.public_id;
 			}
