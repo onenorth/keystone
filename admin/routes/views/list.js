@@ -125,7 +125,8 @@ exports = module.exports = function(req, res) {
 				colPaths: _.pluck(columns, 'path'),
 				items: items,
 				submitted: req.body || {},
-				query: req.query
+				query: req.query,
+				customAdminStylesheet: keystone.get('customAdminStylesheet')
 			}));
 
 		});

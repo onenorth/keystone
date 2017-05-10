@@ -19,6 +19,10 @@ html
 		link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
 		block head
 
+		//- Custom Stylesheet
+		if customAdminStylesheet
+			link(rel="stylesheet", href=(customAdminStylesheet))
+
 	body(id='page-' + page).sidebar-collapse
 		include ../../admin/public/images/icons/icons.svg
 		#wrap

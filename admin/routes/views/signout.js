@@ -14,7 +14,8 @@ exports = module.exports = function(req, res) {
 		}
 
 		keystone.render(req, res, 'signout', {
-			logo: keystone.get('signin logo')
+			logo: keystone.get('signin logo'),
+			customAdminStylesheet: keystone.get('customAdminStylesheet')
 		});
 	});
 
