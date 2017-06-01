@@ -301,6 +301,17 @@ module.exports = Field.create({
 			});
 		};
 
+		// Address issue using select: https://github.com/keystonejs/keystone/issues/2114
+		var self = this;
+
+		var onChange = function onChange(data) {
+			if (data) {
+				self.setState({ selectedCloudinaryImage: data });
+			}  else {
+				self.setState({ selectedCloudinaryImage: null });
+			}
+		};
+
 		return (
 			<div className='image-select'>
 				<Select
@@ -308,6 +319,8 @@ module.exports = Field.create({
 					className='ui-select2-cloudinary'
 					name={this.props.paths.select}
 					id={'field_' + this.props.paths.select}
+					value={this.state.selectedCloudinaryImage}
+					onChange={onChange}
 					asyncOptions={getOptions}
 				/>
 			</div>
