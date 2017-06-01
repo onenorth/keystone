@@ -29495,6 +29495,7 @@ var Select = React.createClass({
 
 		var thisRequestId = this._currentRequestId = requestId++;
 		if (this.props.cacheAsyncResults) {
+			if (input) {
 			for (var i = 0; i <= input.length; i++) {
 				var cacheKey = input.slice(0, i);
 				if (this._optionsCache[cacheKey] && (input === cacheKey || this._optionsCache[cacheKey].complete)) {
@@ -29514,6 +29515,7 @@ var Select = React.createClass({
 					if (callback) callback.call(this, newState);
 					return;
 				}
+			}
 			}
 		}
 
