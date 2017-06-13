@@ -316,7 +316,8 @@ module.exports = Field.create({
 				data: {
 					q: input
 				},
-				prefix: selectPrefix
+				prefix: selectPrefix,
+				max: 50
 			}, function (data) {
 				var options = [];
 
