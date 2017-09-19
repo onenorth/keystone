@@ -45,6 +45,13 @@ file.prototype.addToSchema = function (schema) {
  */
 file.prototype.upload = function (item, file, callback) {
 	var field = this;
+
+	// Include details about the document item so that they can
+	// be used in Storage Adapter naming functions
+	file._itemId = item.id;	// ObjectId of Document Item
+	file._fieldPath = field.path; // Keystone Model Field Path
+	file._listName = field.list.key; // Keystone Model List Name
+
 	// TODO; Validate there is actuall a file to upload
 	debug('[%s.%s] Uploading file for item %s:', this.list.key, this.path, item.id, file);
 	this.storage.uploadFile(file, function (err, result) {
