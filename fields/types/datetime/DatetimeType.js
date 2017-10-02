@@ -43,8 +43,11 @@ datetime.prototype.addFilterToQuery = DateType.prototype.addFilterToQuery;
  * Get the value from a data object; may be simple or a pair of fields
  */
 datetime.prototype.getInputFromData = function (data) {
+	// Fallback time is used when a date is provided but not a time
+	var fallbackTime = '12:00:00 AM';
+
 	var dateValue = this.getValueFromData(data, '_date');
-	var timeValue = this.getValueFromData(data, '_time');
+	var timeValue = this.getValueFromData(data, '_time') || fallbackTime;
 	var tzOffsetValue = this.getValueFromData(data, '_tzOffset');
 	if (dateValue && timeValue) {
 		var combined = dateValue + ' ' + timeValue;
@@ -54,7 +57,8 @@ datetime.prototype.getInputFromData = function (data) {
 		return combined;
 	}
 
-	return this.getValueFromData(data);
+	// If no dateValue is provided, clear out the field
+	return ''
 };
 
 
