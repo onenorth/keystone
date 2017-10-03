@@ -40,7 +40,7 @@ function getNameFromData (data) {
 
 function smoothScrollTop () {
 	if (document.body.scrollTop || document.documentElement.scrollTop) {
-		window.scrollBy(0, -50);
+		window.scrollBy(0, -200);
 		var timeOut = setTimeout(smoothScrollTop, 20);
 	}	else {
 		clearTimeout(timeOut);
