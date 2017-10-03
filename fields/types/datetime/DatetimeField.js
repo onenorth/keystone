@@ -22,7 +22,7 @@ module.exports = Field.create({
 
 	// default input formats
 	dateInputFormat: 'YYYY-MM-DD',
-	timeInputFormat: 'h:mm:ss a',
+	timeInputFormat: 'h:mm a',
 	tzOffsetInputFormat: 'Z',
 
 	// parse formats (duplicated from lib/fieldTypes/datetime.js)
@@ -125,7 +125,7 @@ module.exports = Field.create({
 								autoComplete="off"
 								name={this.getInputName(this.props.paths.time)}
 								onChange={this.timeChanged}
-								placeholder="HH:MM:SS am/pm"
+								placeholder="HH:MM am/pm"
 								value={this.state.timeValue}
 							/>
 						</Section>
