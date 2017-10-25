@@ -19,6 +19,7 @@ function FileChangeMessage ({ style, color, ...props }) {
 	return (
 		<FormInput
 			noedit
+			component='a'
 			style={styles}
 			{...props}
 		/>
