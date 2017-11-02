@@ -3,6 +3,7 @@ import Field from '../Field';
 import { listsByKey } from '../../../admin/client/utils/lists';
 import React from 'react';
 import Select from 'react-select';
+import DraggableSelect from './DraggableSelect';
 import xhr from 'xhr';
 import {
 	Button,
@@ -158,6 +159,11 @@ module.exports = Field.create({
 		});
 	},
 
+	updateOrder(newOrder) {
+		const newOrderIds = newOrder.map(item => item.id).join(',');
+		return this.valueChanged(newOrderIds);
+	},
+
 	openCreate () {
 		this.setState({
 			createIsOpen: true,
@@ -194,17 +200,33 @@ module.exports = Field.create({
 			<div>
 				{/* This input element fools Safari's autocorrect in certain situations that completely break react-select */}
 				<input type="text" style={{ position: 'absolute', width: 1, height: 1, zIndex: -1, opacity: 0 }} tabIndex="-1"/>
-				<Select.Async
-					multi={this.props.many}
-					disabled={noedit}
-					loadOptions={this.loadOptions}
-					labelKey="name"
-					name={this.getInputName(this.props.path)}
-					onChange={this.valueChanged}
-					simpleValue
-					value={this.state.value}
-					valueKey="id"
-				/>
+				{ this.props.many
+					?
+					<DraggableSelect
+						multi={this.props.many}
+						disabled={noedit}
+						loadOptions={this.loadOptions}
+						labelKey="name"
+						name={this.getInputName(this.props.path)}
+						onChange={this.valueChanged}
+						simpleValue
+						value={this.state.value}
+						valueKey="id"
+						updateOrder={this.updateOrder}
+					/>
+					:
+					<Select.Async
+						multi={this.props.many}
+						disabled={noedit}
+						loadOptions={this.loadOptions}
+						labelKey="name"
+						name={this.getInputName(this.props.path)}
+						onChange={this.valueChanged}
+						simpleValue
+						value={this.state.value}
+						valueKey="id"
+					/>
+				}
 			</div>
 		);
 	},
