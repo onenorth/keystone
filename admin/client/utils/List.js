@@ -85,6 +85,13 @@ const List = function (options) {
 	this.defaultColumnPaths = this.expandedDefaultColumns.map(i => i.path).join(',');
 };
 
+
+function parseJsonIfString (data) {
+	return typeof data === 'string'
+		? JSON.parse(data)
+		: data;
+}
+
 /**
  * Create an item via the API
  *
@@ -101,13 +108,13 @@ List.prototype.createItem = function (formData, callback) {
 	}, (err, resp, data) => {
 		if (err) callback(err);
 		if (resp.statusCode === 200) {
-			callback(null, data);
+			callback(null, parseJsonIfString(data));
 		} else {
 			// NOTE: xhr callback will be called with an Error if
 			//  there is an error in the browser that prevents
 			//  sending the request. A HTTP 500 response is not
 			//  going to cause an error to be returned.
-			callback(data, null);
+			callback(parseJsonIfString(data), null);
 		}
 	});
 };
@@ -129,9 +136,9 @@ List.prototype.updateItem = function (id, formData, callback) {
 	}, (err, resp, data) => {
 		if (err) return callback(err);
 		if (resp.statusCode === 200) {
-			callback(null, data);
+			callback(null, parseJsonIfString(data));
 		} else {
-			callback(data);
+			callback(parseJsonIfString(data));
 		}
 	});
 };
@@ -236,9 +243,9 @@ List.prototype.loadItem = function (itemId, options, callback) {
 		if (err) return callback(err);
 		// Pass the data as result or error, depending on the statusCode
 		if (resp.statusCode === 200) {
-			callback(null, data);
+			callback(null, parseJsonIfString(data));
 		} else {
-			callback(data);
+			callback(parseJsonIfString(data));
 		}
 	});
 };
@@ -259,9 +266,9 @@ List.prototype.loadItems = function (options, callback) {
 		if (err) callback(err);
 		// Pass the data as result or error, depending on the statusCode
 		if (resp.statusCode === 200) {
-			callback(null, data);
+			callback(null, parseJsonIfString(data));
 		} else {
-			callback(data);
+			callback(parseJsonIfString(data));
 		}
 	});
 };

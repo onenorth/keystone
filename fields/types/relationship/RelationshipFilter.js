@@ -24,6 +24,12 @@ function getDefaultValue () {
 	};
 }
 
+function parseJsonIfString (data) {
+	return typeof data === 'string'
+		? JSON.parse(data)
+		: data;
+}
+
 var RelationshipFilter = React.createClass({
 	propTypes: {
 		field: React.PropTypes.object,
@@ -70,8 +76,8 @@ var RelationshipFilter = React.createClass({
 				responseType: 'json',
 			}, (err, resp, data) => {
 				if (err || !data) return next(err);
-				this.cacheItem(data);
-				next(err, data);
+				this.cacheItem(parseJsonIfString(data));
+				next(err, parseJsonIfString(data));
 			});
 		}, (err, items) => {
 			if (err) {
@@ -109,7 +115,8 @@ var RelationshipFilter = React.createClass({
 		xhr({
 			url: Keystone.adminPath + '/api/' + this.props.field.refList.path + '?basic&search=' + searchString + '&' + filters,
 			responseType: 'json',
-		}, (err, resp, data) => {
+		}, (err, resp, respData) => {
+			var data = parseJsonIfString(respData)
 			if (err) {
 				// TODO: Handle errors better
 				console.error('Error loading items:', err);

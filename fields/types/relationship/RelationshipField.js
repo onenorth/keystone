@@ -23,6 +23,12 @@ function compareValues (current, next) {
 	return true;
 }
 
+function parseJsonIfString (data) {
+	return typeof data === 'string'
+		? JSON.parse(data)
+		: data;
+}
+
 module.exports = Field.create({
 
 	displayName: 'RelationshipField',
@@ -118,8 +124,8 @@ module.exports = Field.create({
 				responseType: 'json',
 			}, (err, resp, data) => {
 				if (err || !data) return done(err);
-				this.cacheItem(data);
-				done(err, data);
+				this.cacheItem(parseJsonIfString(data));
+				done(err, parseJsonIfString(data));
 			});
 		}, (err, expanded) => {
 			if (!this.isMounted()) return;
@@ -139,7 +145,8 @@ module.exports = Field.create({
 		xhr({
 			url: Keystone.adminPath + '/api/' + this.props.refList.path + '?basic&search=' + input + '&' + filters,
 			responseType: 'json',
-		}, (err, resp, data) => {
+		}, (err, resp, respData) => {
+			var data = parseJsonIfString(respData);
 			if (err) {
 				console.error('Error loading items:', err);
 				return callback(null, []);
