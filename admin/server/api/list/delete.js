@@ -38,6 +38,12 @@ module.exports = function (req, res) {
 			return res.apiError('database error', err);
 		}
 		async.forEachLimit(results, 10, function (item, next) {
+
+			// Attach the user object to the item so that it
+			// can be used in mongoose middleware hooks to help
+			// track who is deleting this item.
+			item.__user = req.user;
+
 			item.remove(function (err) {
 				if (err) return next(err);
 				deletedCount++;
