@@ -1,11 +1,120 @@
 {
-  "name": "keystone",
-  "version": "0.3.13",
-  "description": "Web Application Framework and Admin GUI / Content Management System built on Express.js and Mongoose",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/keystonejs/keystone.git"
+  "_args": [
+    [
+      "keystone@https://github.com/onenorth/keystone/tarball/v1.0.9",
+      "C:\\Users\\bdeleon\\Source\\Repos\\latham-watkins-keystone"
+    ]
+  ],
+  "_from": "keystone@https://github.com/onenorth/keystone/tarball/v1.0.9",
+  "_id": "keystone@https://github.com/onenorth/keystone/tarball/v1.0.9",
+  "_inBundle": false,
+  "_integrity": "sha512-hX8mJcWzlU2RRB/q5k+vnyV5L/gQMx+6PltMd/HMiuuutvjDAh9hq33Y7zn0pUkSkYqT4B/+agOAb3eBd3dNMw==",
+  "_location": "/keystone",
+  "_phantomChildren": {
+    "accepts": "1.3.5",
+    "array-flatten": "1.1.1",
+    "babel-plugin-constant-folding": "1.0.1",
+    "babel-plugin-dead-code-elimination": "1.0.2",
+    "babel-plugin-eval": "1.0.1",
+    "babel-plugin-inline-environment-variables": "1.0.1",
+    "babel-plugin-jscript": "1.0.4",
+    "babel-plugin-member-expression-literals": "1.0.1",
+    "babel-plugin-property-literals": "1.0.1",
+    "babel-plugin-proto-to-assign": "1.0.4",
+    "babel-plugin-react-constant-elements": "1.0.3",
+    "babel-plugin-react-display-name": "1.0.3",
+    "babel-plugin-remove-console": "1.0.1",
+    "babel-plugin-remove-debugger": "1.0.1",
+    "babel-plugin-runtime": "1.0.7",
+    "babel-plugin-undeclared-variables-check": "1.0.2",
+    "babel-plugin-undefined-to-void": "1.1.6",
+    "bluebird": "2.11.0",
+    "brace-expansion": "1.1.11",
+    "chalk": "1.1.3",
+    "coffee-script": "1.12.7",
+    "content-disposition": "0.5.2",
+    "content-type": "1.0.4",
+    "convert-source-map": "1.5.1",
+    "cookie": "0.3.1",
+    "cookie-signature": "1.0.6",
+    "depd": "1.1.2",
+    "encodeurl": "1.0.2",
+    "envify": "3.4.1",
+    "escape-html": "1.0.3",
+    "esutils": "2.0.2",
+    "etag": "1.8.1",
+    "fs-readdir-recursive": "0.1.2",
+    "get-stdin": "4.0.1",
+    "graceful-fs": "4.1.11",
+    "home-or-tmp": "1.0.0",
+    "http-errors": "1.6.3",
+    "inherits": "2.0.3",
+    "is-finite": "1.0.2",
+    "is-integer": "1.0.7",
+    "json5": "0.4.0",
+    "jsonfile": "2.4.0",
+    "merge-descriptors": "1.0.1",
+    "ms": "2.0.0",
+    "object-assign": "4.1.1",
+    "on-finished": "2.3.0",
+    "output-file-sync": "1.1.2",
+    "parseurl": "1.3.2",
+    "path-exists": "1.0.0",
+    "path-is-absolute": "1.0.1",
+    "path-to-regexp": "0.1.7",
+    "private": "0.1.8",
+    "proxy-addr": "2.0.3",
+    "range-parser": "1.2.0",
+    "regenerator": "0.8.40",
+    "regexpu": "1.3.0",
+    "resolve": "1.8.1",
+    "rimraf": "2.6.2",
+    "send": "0.16.2",
+    "serve-static": "1.13.2",
+    "setprototypeof": "1.1.0",
+    "shebang-regex": "1.0.0",
+    "slash": "1.0.0",
+    "source-map-support": "0.2.10",
+    "to-fast-properties": "1.0.3",
+    "trim-right": "1.0.1",
+    "try-resolve": "1.0.1",
+    "type-is": "1.6.16",
+    "unpipe": "1.0.0",
+    "utils-merge": "1.0.1",
+    "vary": "1.1.2"
+  },
+  "_requested": {
+    "type": "remote",
+    "raw": "keystone@https://github.com/onenorth/keystone/tarball/v1.0.9",
+    "name": "keystone",
+    "escapedName": "keystone",
+    "rawSpec": "https://github.com/onenorth/keystone/tarball/v1.0.9",
+    "saveSpec": "https://github.com/onenorth/keystone/tarball/v1.0.9",
+    "fetchSpec": "https://github.com/onenorth/keystone/tarball/v1.0.9"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_spec": "https://github.com/onenorth/keystone/tarball/v1.0.9",
+  "_where": "C:\\Users\\bdeleon\\Source\\Repos\\latham-watkins-keystone",
+  "author": {
+    "name": "Jed Watson"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "tinymce": "global:tinymce",
+    "jquery": "global:$",
+    "codemirror": "global:CodeMirror",
+    "underscore": "global:_",
+    "pikaday": "global.Pikaday",
+    "moment": "global.moment"
+  },
+  "bugs": {
+    "url": "https://github.com/keystonejs/keystone/issues"
   },
   "dependencies": {
     "async": "^1.4.2",
@@ -28,6 +137,7 @@
     "codemirror": "^5.6.0",
     "compression": "^1.5.2",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.1",
     "cookie-parser": "^1.3.5",
     "debug": "^2.2.0",
     "embedly": "^1.0.4",
@@ -46,7 +156,7 @@
     "marked": "^0.3.5",
     "method-override": "^2.3.5",
     "moment": "^2.10.6",
-    "mongoose": "~3.8.35",
+    "mongoose": "^4.7.6",
     "morgan": "^1.6.1",
     "mpromise": "^0.5.5",
     "multer": "^0.1.8",
@@ -67,6 +177,7 @@
     "vkey": "^1.0.0",
     "watchify": "^3.3.1"
   },
+  "description": "Web Application Framework and Admin GUI / Content Management System built on Express.js and Mongoose",
   "devDependencies": {
     "babel-eslint": "^4.0.10",
     "browserify": "^11.0.1",
@@ -85,22 +196,12 @@
     "supertest": "^1.0.1",
     "vinyl-source-stream": "^1.1.0"
   },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
+  "engines": {
+    "node": ">= 0.10.28",
+    "npm": ">= 1.4.9"
   },
-  "browserify-shim": {
-    "tinymce": "global:tinymce",
-    "jquery": "global:$",
-    "codemirror": "global:CodeMirror",
-    "underscore": "global:_",
-    "pikaday": "global.Pikaday",
-    "moment": "global.moment"
-  },
-  "author": "Jed Watson",
+  "gitHead": "ef3fd612285315ea8e12f68da4c8d6031e2c7fe7",
   "homepage": "http://keystonejs.com/",
-  "license": "MIT",
   "keywords": [
     "express",
     "web",
@@ -114,24 +215,23 @@
     "website",
     "forms"
   ],
-  "readmeFilename": "README.md",
-  "gitHead": "ef3fd612285315ea8e12f68da4c8d6031e2c7fe7",
-  "bugs": {
-    "url": "https://github.com/keystonejs/keystone/issues"
+  "license": "MIT",
+  "main": "index.js",
+  "name": "keystone",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keystonejs/keystone.git"
   },
   "scripts": {
     "build": "NODE_ENV=production gulp build-packages",
     "build-dev": "gulp build-packages",
+    "clean": "rimraf ./coverage",
+    "lint": "eslint .",
+    "posttest-cov": "if [ -n \"$CODECLIMATE_REPO_TOKEN\" ]; then codeclimate < coverage/lcov.info; fi",
+    "pretest-cov": "npm run clean",
     "release": "gulp release",
     "test": "mocha",
-    "lint": "eslint .",
-    "pretest-cov": "npm run clean",
-    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha",
-    "posttest-cov": "if [ -n \"$CODECLIMATE_REPO_TOKEN\" ]; then codeclimate < coverage/lcov.info; fi",
-    "clean": "rimraf ./coverage"
+    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
   },
-  "engines": {
-    "node": ">= 0.10.28",
-    "npm": ">= 1.4.9"
-  }
+  "version": "0.3.13"
 }
